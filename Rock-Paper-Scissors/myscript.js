@@ -1,71 +1,81 @@
+const selection = ['Rock','Paper','Scissors']
+const choiceBtn = document.querySelectorAll('.choice')
+
+let computerScore = 0 
+let playerScore = 0
+let roundForPlayers = ``
 
 
+// for each button it does this
+ choiceBtn.forEach(button => button.addEventListener("click", () => {
+  
+   player = button.textContent;
 
+  computerChoice()
+  game()
+}))
 
-function getComputerChoice(){
-    const computerChoice = Math.random()
-
-if (computerChoice < 0.399){
-     return"rock"
-
-} else if (computerChoice > 0.399 && computerChoice <0.699){
-     return"paper"
-
-}else if(computerChoice > 0.699 && computerChoice < 0.99999){
-     return"scissors"
-} 
-
+// random computer move
+function computerChoice(){
+  const computer = selection[Math.floor(Math.random()*3)]
+  return computer
 }
-/* This functions give out the computers choice */
+ 
+// plays a round by comparing and give winner
+function playRound(computerSel,playerSel){
+  computerSel = computerChoice()
+ playerSel = player
+
+ 
+
+ if (computerSel === playerSel) {
+  winnerOfRound.textContent = "It's a tie!"
+ }
+    else if (playerSel == "Rock" && computerSel == "Scissors") {
+      playerScore++
+      winnerOfRound.textContent=`you win ${playerSel} beats ${computerSel}`
     
-   
+    } else if (playerSel == "Paper" && computerSel == "Rock") {
+      playerScore++
 
-function playRound(playerSel) {
-    computerSel = getComputerChoice();
-    playerSel = prompt("Choose quick Rock, Paper, or Scissors").toLowerCase();
+      winnerOfRound.textContent=`you win ${playerSel} beats ${computerSel}`
+    
+    }else if (playerSel == "Scissors" && computerSel == "Paper") {
+      playerScore++
 
-  
-    if (playerSel == computerSel) {
-      return "It's a tie!";
-    } else if (
-      (playerSel == "rock" && computerSel === "scissors") ||
-      (playerSel =="paper" && computerSel === "rock") ||
-      (playerSel == "scissors" && computerSel === "paper")
-    ) {
-      return `You Win! ${playerSel} beats ${computerSel}`;
-    } else {
-      return`Computer Wins! ${computerSel} beats ${playerSel}`;
+      winnerOfRound.textContent=`you win ${playerSel} beats ${computerSel}`
+    
+    }else{ 
+      winnerOfRound.textContent= `Computer wins ${computerSel} beats ${playerSel}`
+      computerScore++
+      
     }
-  }
-  
+}
+let winnerOfRound = document.querySelector(".compare")
 
 
-//chat gpt answer
-function playGame() {
-    let playerScore = 0;
-    let computerScore = 0;
+
+
+//game function plays 5 rounds 
+function game(){
+    playRound()
+    if (playerScore == 5)
+    {winDis.textContent = "You Win!"
   
-    for (let i = 0; i < 5; i++) {
-      const result = playRound();
-      if (result.includes('You Win')) {
-        playerScore++;
-      } else if (result.includes('Computer Wins')) {
-        computerScore++;
-      }
-      alert(result);
-    }
+    playerScore = 0 
+  computerScore = 0 }
+    
+  else if (computerScore==5 ){
+    winDis.textContent = "Machine Win!"
+    
+    playerScore = 0 
+    computerScore = 0 }
+    
+  let roundOf = document.querySelector(".round")
+  roundOf.textContent = `Player Score ${playerScore} and Computer Score ${computerScore}`  
   
-    alert(`Game Over\nPlayer Score: ${playerScore}\nComputer Score: ${computerScore}`);
-  
-    if (playerScore > computerScore) {
-      alert('You win the game!');
-    } else if (computerScore > playerScore) {
-      alert('Computer wins the game!');
-    } else {
-      alert("It's a tie game!");
-    }
-  }
-  
-  // Start the game
-  playGame();
-   
+}
+let roundOf = document.querySelector(".round")
+  roundOf.textContent = `Player Score ${playerScore} and Computer Score ${computerScore}` 
+
+  let winDis = document.querySelector('.winner') //works inside of the game and will display winner of the game 
